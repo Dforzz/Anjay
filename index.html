@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ucapan Ulang Tahun</title>
+  <style>
+    body {
+      margin: 0 auto;
+      font-family: 'Poppins', sans-serif;
+      background: url('bg1(2).jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      transition: background 1s ease-in-out;
+      width: 100%;
+      max-width: 1200px;
+      height: auto;
+    }
+    .container {
+      padding: 100px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    /* Tombol Lihat Ucapan dengan efek glowing dan animasi */
+    button {
+      padding: 14px 34px;
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: linear-gradient(270deg, #ff4b2b, #ff416c, #ff4b2b);
+      background-size: 300% 300%;
+      animation: gradientMove 5s ease infinite, pulseGlow 2s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(255, 64, 129, 0.6), 0 0 40px rgba(255, 64, 129, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: rgba(255,255,255,0.4);
+      transform: skewX(-25deg);
+      animation: shine 2.5s infinite;
+    }
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(255, 64, 129, 0.8), 0 0 60px rgba(255, 64, 129, 0.6);
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes shine {
+      0% { left: -75%; }
+      100% { left: 125%; }
+    }
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(255, 64, 129, 0.6), 0 0 30px rgba(255, 64, 129, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 25px rgba(255, 64, 129, 0.8), 0 0 50px rgba(255, 64, 129, 0.6);
+      }
+    }
+
+    #loading-text {
+      margin-top: 15px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #fff;
+      display: none;
+    }
+    #halaman2 {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .amplop {
+      background: rgba(255,255,255,0.95);
+      color: #333;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      position: relative;
+      animation: fadeInUp 1.2s ease-out;
+    }
+    .amplop::before {
+      content: "";
+      background: #ff69b4;
+      width: 140px;
+      height: 140px;
+      position: absolute;
+      top: -70px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      z-index: -1;
+      border-radius: 20px;
+    }
+    .amplop h2, .amplop p {
+      opacity: 0;
+      animation: fadeInText 1s ease-out forwards;
+    }
+    .amplop h2 { animation-delay: 0.3s; }
+    .amplop p:nth-of-type(1) { animation-delay: 0.6s; }
+    .amplop p:nth-of-type(2) { animation-delay: 0.9s; }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hidden { display: none; }
+    h1 { font-size: 2.2em; }
+
+    /* Music control top right */
+    .music-toggle {
+      position: fixed;
+      right: 18px;
+      top: 18px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #ccc;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: pointer;
+      border: 3px solid rgba(255,255,255,0.12);
+      transition: transform 0.15s, box-shadow 0.15s;
+      backdrop-filter: blur(6px);
+    }
+    .music-toggle img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      background: transparent;
+    }
+    .music-toggle:active {
+      animation: pop 0.2s ease;
+    }
+    @keyframes pop {
+      0% { transform: scale(0.85); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .music-toggle.playing {
+      animation: glow 1.6s infinite;
+    }
+    .music-toggle.playing img {
+      animation: spin 4s linear infinite;
+    }
+    @keyframes glow {
+      0% { box-shadow: 0 8px 20px rgba(143, 90, 246, 0.25); }
+      50% { box-shadow: 0 14px 30px rgba(143, 90, 246, 0.45); }
+      100% { box-shadow: 0 8px 20px rgba(143, 90, 246, 0.25); }
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    audio { display: none; }
+  </style>
+</head>
+<body>
+
+<div id="halaman1" class="container">
+  <h1>🎈 (kosong dulu) 🎉</h1>
+  <button id="btn-ucapan" onclick="mulaiTransition()">Lihat Ucapan</button>
+  <div id="loading-text">Sebentar ya...</div>
+</div>
+
+<div id="halaman2" class="container">
+  <div class="amplop">
+    <h2>kosong 🎂</h2>
+    <p>kosong 🎉</p>
+    <p>kosong</p>
+  </div>
+</div>
+
+<audio id="bgMusic" src="love (mp3cut.net).mp3" loop></audio>
+<audio id="klikSound" src="Mayuri's Tuturu - Notification Tune.mp3"></audio>
+
+<!-- Tombol Musik -->
+<button id="musicToggle" class="music-toggle" aria-pressed="false" aria-label="Play musik">
+  <img id="iconPlay" src="./nia_play.png" alt="▶" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span style=&quot;font-size:20px;color:#fff;&quot;>▶</span>');">
+  <img id="iconPause" src="./nia_pause.png" alt="⏸" style="display:none" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span style=&quot;font-size:20px;color:#fff;&quot;>⏸</span>');">
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  function mulaiTransition() {
+    const tombol = document.getElementById("btn-ucapan");
+    const loadingText = document.getElementById("loading-text");
+    const klikSound = document.getElementById("klikSound");
+    tombol.disabled = true;
+    klikSound.play();
+    loadingText.style.display = "block";
+    setTimeout(() => {
+      tampilkanUcapan();
+    }, 1500);
+  }
+  function tampilkanUcapan() {
+    document.getElementById("halaman1").classList.add("hidden");
+    const halaman2 = document.getElementById("halaman2");
+    halaman2.style.display = "flex";
+    document.body.style.background = "url('niaBG.jpg') no-repeat center center fixed";
+    document.body.style.backgroundSize = "cover";
+    fadePlay(bgMusic);
+    setMusicUI(true);
+    mulaiConfetti();
+  }
+  function mulaiConfetti() {
+    const duration = 5 * 1000;
+    const end = Date.now() + duration;
+    (function frame() {
+      confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0 } });
+      confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1 } });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+  }
+  const musicToggle = document.getElementById('musicToggle');
+  const bgMusic = document.getElementById('bgMusic');
+  const iconPlay = document.getElementById('iconPlay');
+  const iconPause = document.getElementById('iconPause');
+  function setMusicUI(playing) {
+    if (playing) {
+      musicToggle.classList.add('playing');
+      iconPlay.style.display = 'none';
+      iconPause.style.display = 'block';
+      musicToggle.setAttribute('aria-pressed', 'true');
+    } else {
+      musicToggle.classList.remove('playing');
+      iconPlay.style.display = 'block';
+      iconPause.style.display = 'none';
+      musicToggle.setAttribute('aria-pressed', 'false');
+    }
+  }
+  function fadePlay(audio) {
+    audio.volume = 0;
+    audio.play();
+    let vol = 0;
+    const fade = setInterval(() => {
+      vol += 0.05;
+      if (vol >= 1) { audio.volume = 1; clearInterval(fade); }
+      else audio.volume = vol;
+    }, 50);
+  }
+  function fadePause(audio) {
+    let vol = audio.volume;
+    const fade = setInterval(() => {
+      vol -= 0.05;
+      if (vol <= 0) { audio.pause(); audio.volume = 1; clearInterval(fade); }
+      else audio.volume = vol;
+    }, 50);
+  }
+  function toggleMusic() {
+    if (bgMusic.paused) { fadePlay(bgMusic); setMusicUI(true); }
+    else { fadePause(bgMusic); setMusicUI(false); }
+  }
+  musicToggle.addEventListener('click', toggleMusic);
+  bgMusic.addEventListener('play', () => setMusicUI(true));
+  bgMusic.addEventListener('pause', () => setMusicUI(false));
+</script>
+</body>
+</html>
