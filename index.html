@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ucapan Ulang Tahun</title>
+  <title>for my lilsis</title>
   <style>
     body {
       margin: 0 auto;
@@ -24,7 +24,7 @@
       flex-direction: column;
       justify-content: center;
     }
-    /* Tombol Lihat Ucapan dengan efek glowing dan animasi */
+    /* Tombol Lihat Ucapan */
     button {
       padding: 14px 34px;
       font-size: 20px;
@@ -48,33 +48,24 @@
       left: -75%;
       width: 50%;
       height: 100%;
-      background: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.25);
       transform: skewX(-25deg);
       animation: shine 2.5s infinite;
     }
     button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 30px rgba(255, 64, 129, 0.8), 0 0 60px rgba(255, 64, 129, 0.6);
+      transform: scale(1.06);
+      box-shadow: 0 0 28px rgba(255, 64, 129, 0.75), 0 0 50px rgba(255, 64, 129, 0.55);
     }
-
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    @keyframes shine {
-      0% { left: -75%; }
-      100% { left: 125%; }
-    }
+    @keyframes shine { 0% { left: -75%; } 100% { left: 125%; } }
     @keyframes pulseGlow {
-      0%, 100% {
-        box-shadow: 0 0 15px rgba(255, 64, 129, 0.6), 0 0 30px rgba(255, 64, 129, 0.4);
-      }
-      50% {
-        box-shadow: 0 0 25px rgba(255, 64, 129, 0.8), 0 0 50px rgba(255, 64, 129, 0.6);
-      }
+      0%,100% { box-shadow: 0 0 12px rgba(255,64,129,0.5), 0 0 28px rgba(255,64,129,0.35); }
+      50% { box-shadow: 0 0 20px rgba(255,64,129,0.7), 0 0 45px rgba(255,64,129,0.5); }
     }
-
     #loading-text {
       margin-top: 15px;
       font-size: 16px;
@@ -90,55 +81,76 @@
       min-height: 100vh;
       padding: 20px;
     }
+
+    /* Amplop warna krim + efek hover + animasi pulse */
     .amplop {
-      background: rgba(255,255,255,0.95);
+      background: #fdf3e7; /* warna krim lembut */
       color: #333;
       max-width: 500px;
       margin: 0 auto;
       padding: 40px 30px;
       border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      box-shadow:
+      0 0 20px rgba(255, 223, 186, 0.6),
+      0 0 40px rgba(255, 215, 170, 0.4),
+      0 8px 20px rgba(0,0,0,0.3);
       position: relative;
-      animation: fadeInUp 1.2s ease-out;
+      animation: fadeInUp 1.2s ease-out, amplopPulse 6s ease-in-out infinite;
       text-align: center;
-    }
-    .amplop::before {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      z-index: 1;
+        }
+        .amplop:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow:
+      0 0 25px rgba(255, 223, 186, 0.8),
+      0 0 50px rgba(255, 215, 170, 0.5),
+      0 12px 25px rgba(0,0,0,0.35);
+        }
+        .amplop::before {
       content: "";
-      background: #ff69b4;
+      background: #ffb6c1;
       width: 140px;
       height: 140px;
       position: absolute;
       top: -70px;
       left: 50%;
       transform: translateX(-50%) rotate(45deg);
-      z-index: -1;
+      z-index: -2;
       border-radius: 20px;
-    }
-    /* Tambahan untuk membungkus teks panjang agar tidak keluar kotak */
-    .amplop p {
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      white-space: normal;
-    }
-    .amplop h2, .amplop p {
-      opacity: 0;
-      animation: fadeInText 1s ease-out forwards;
-    }
-    .amplop h2 { animation-delay: 0.3s; }
-    .amplop p:nth-of-type(1) { animation-delay: 0.6s; }
-    .amplop p:nth-of-type(2) { animation-delay: 0.9s; }
+      box-shadow: 0 0 20px rgba(255, 182, 193, 0.6);
+      animation: penutupPulse 6s ease-in-out infinite;
+        }
+    /* Animasi muncul */
     @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(40px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInText {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .hidden { display: none; }
-    h1 { font-size: 2.2em; }
+    /* Loop glow amplop */
+    @keyframes amplopPulse {
+      0%, 100% {
+        box-shadow:
+          0 0 20px rgba(255, 223, 186, 0.6),
+          0 0 40px rgba(255, 215, 170, 0.4),
+          0 8px 20px rgba(0,0,0,0.3);
+      }
+      50% {
+        box-shadow:
+          0 0 25px rgba(255, 223, 186, 0.8),
+          0 0 50px rgba(255, 215, 170, 0.5),
+          0 8px 20px rgba(0,0,0,0.3);
+      }
+    }
+    /* Loop glow penutup amplop */
+    @keyframes penutupPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 182, 193, 0.6); }
+      50% { box-shadow: 0 0 30px rgba(255, 182, 193, 0.8); }
+    }
 
-    /* Music control top right */
+    .hidden { display: none; }
+    h1 { font-size: 2.2em; color: #fff; }
+
+    /* Music control */
     .music-toggle {
       position: fixed;
       right: 18px;
@@ -147,14 +159,14 @@
       height: 64px;
       border-radius: 50%;
       overflow: hidden;
-      background: #ccc;
+      background: rgba(255,255,255,0.12);
       box-shadow: 0 8px 20px rgba(0,0,0,0.35);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 9999;
       cursor: pointer;
-      border: 3px solid rgba(255,255,255,0.12);
+      border: 3px solid rgba(255,255,255,0.06);
       transition: transform 0.15s, box-shadow 0.15s;
       backdrop-filter: blur(6px);
     }
@@ -164,29 +176,12 @@
       object-fit: contain;
       background: transparent;
     }
-    .music-toggle:active {
-      animation: pop 0.2s ease;
-    }
-    @keyframes pop {
-      0% { transform: scale(0.85); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    .music-toggle.playing {
-      animation: glow 1.6s infinite;
-    }
-    .music-toggle.playing img {
-      animation: spin 4s linear infinite;
-    }
-    @keyframes glow {
-      0% { box-shadow: 0 8px 20px rgba(143, 90, 246, 0.25); }
-      50% { box-shadow: 0 14px 30px rgba(143, 90, 246, 0.45); }
-      100% { box-shadow: 0 8px 20px rgba(143, 90, 246, 0.25); }
-    }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
+    .music-toggle:active { animation: pop 0.2s ease; }
+    @keyframes pop { 0% { transform: scale(0.85); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    .music-toggle.playing { animation: glow 1.6s infinite; }
+    .music-toggle.playing img { animation: spin 4s linear infinite; }
+    @keyframes glow { 0% { box-shadow: 0 8px 20px rgba(143, 90, 246, 0.18); } 50% { box-shadow: 0 14px 30px rgba(143, 90, 246, 0.28); } 100% { box-shadow: 0 8px 20px rgba(143, 90, 246, 0.18); } }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     audio { display: none; }
   </style>
 </head>
@@ -194,11 +189,11 @@
 
 <div id="halaman1" class="container">
   <h1>🎈 yeyyy tanggal 13 🎉</h1>
-  <button id="btn-ucapan" onclick="mulaiTransition()">Lihat Ucapan</button>
-  <div id="loading-text">Sebentar ya...</div>
+  <button id="btn-ucapan">pencet ini woi</button>
+  <div id="loading-text">agek yh loading bntr ...</div>
 </div>
 
-<div id="halaman2" class="container">
+<div id="halaman2" class="container" aria-hidden="true">
   <div class="amplop">
     <h2>13 - Agustus - 2010 🎂</h2>
     <p>weshhh ulang tahun, selamat bertambah usia Adek amb, semoga dengan bertambahny umur kau bertambah jugo rezeki nyo, semoga selalu di kelilingi kebaikan, kabahagiaan, dan kedamaian. Senyum terus yoo Nia, jangan sampe luntur senyum kau, mokasih yo sudah terlahir di dunia, mokasih jg la bertahan sampe sekarang, Nia kuat Nia hebat Nia itu Nina, Bon Jovi said "And I know when I die, you'll be on my mind, and i'll love you, always", maaf amb belum bias ngasih kadooo yh ding, maybe someday I will, as always amb selalu bilang amb sayang kau, kau adek amb, thanks for loving me, thank you for making me smile, laugh, being loved. Terakhir untuk kau, always smileeee, tetap jadi Nia yang amb kenal, Nia  yang baik, nia yang peduli sekitar, Nia yang buat orang lain tertawa, Nia yang kuat, Nia yang cengeng ke amb bae😝. Doa amb selalu menyertai kau, dah ah jadila mwehehehe. 🎉</p>
@@ -217,27 +212,62 @@
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
-  function mulaiTransition() {
-    const tombol = document.getElementById("btn-ucapan");
-    const loadingText = document.getElementById("loading-text");
-    const klikSound = document.getElementById("klikSound");
-    tombol.disabled = true;
-    klikSound.play();
-    loadingText.style.display = "block";
-    setTimeout(() => {
-      tampilkanUcapan();
-    }, 1500);
+document.addEventListener('DOMContentLoaded', () => {
+  const tombol = document.getElementById("btn-ucapan");
+  const loadingText = document.getElementById("loading-text");
+  const klikSound = document.getElementById("klikSound");
+  const halaman1 = document.getElementById("halaman1");
+  const halaman2 = document.getElementById("halaman2");
+  const musicToggle = document.getElementById('musicToggle');
+  const bgMusic = document.getElementById('bgMusic');
+  const iconPlay = document.getElementById('iconPlay');
+  const iconPause = document.getElementById('iconPause');
+
+  function setMusicUI(playing) {
+    if (playing) {
+      musicToggle.classList.add('playing');
+      if (iconPlay) iconPlay.style.display = 'none';
+      if (iconPause) iconPause.style.display = 'block';
+      musicToggle.setAttribute('aria-pressed', 'true');
+    } else {
+      musicToggle.classList.remove('playing');
+      if (iconPlay) iconPlay.style.display = 'block';
+      if (iconPause) iconPause.style.display = 'none';
+      musicToggle.setAttribute('aria-pressed', 'false');
+    }
   }
-  function tampilkanUcapan() {
-    document.getElementById("halaman1").classList.add("hidden");
-    const halaman2 = document.getElementById("halaman2");
-    halaman2.style.display = "flex";
-    document.body.style.background = "url('niaBG.jpg') no-repeat center center fixed";
-    document.body.style.backgroundSize = "cover";
-    fadePlay(bgMusic);
-    setMusicUI(true);
-    mulaiConfetti();
+
+  async function fadePlay(audio) {
+    if (!audio) return;
+    audio.volume = 0;
+    try {
+      await audio.play();
+    } catch (e) {
+      console.warn('Audio play failed:', e);
+      return;
+    }
+    let vol = 0;
+    return new Promise(resolve => {
+      const fade = setInterval(() => {
+        vol = Math.min(1, vol + 0.05);
+        audio.volume = vol;
+        if (vol >= 1) { clearInterval(fade); resolve(); }
+      }, 50);
+    });
   }
+
+  function fadePause(audio) {
+    if (!audio) return Promise.resolve();
+    return new Promise(resolve => {
+      let vol = audio.volume;
+      const fade = setInterval(() => {
+        vol -= 0.05;
+        if (vol <= 0) { audio.pause(); audio.volume = 1; clearInterval(fade); resolve(); }
+        else audio.volume = vol;
+      }, 50);
+    });
+  }
+
   function mulaiConfetti() {
     const duration = 5 * 1000;
     const end = Date.now() + duration;
@@ -247,48 +277,39 @@
       if (Date.now() < end) requestAnimationFrame(frame);
     })();
   }
-  const musicToggle = document.getElementById('musicToggle');
-  const bgMusic = document.getElementById('bgMusic');
-  const iconPlay = document.getElementById('iconPlay');
-  const iconPause = document.getElementById('iconPause');
-  function setMusicUI(playing) {
-    if (playing) {
-      musicToggle.classList.add('playing');
-      iconPlay.style.display = 'none';
-      iconPause.style.display = 'block';
-      musicToggle.setAttribute('aria-pressed', 'true');
-    } else {
-      musicToggle.classList.remove('playing');
-      iconPlay.style.display = 'block';
-      iconPause.style.display = 'none';
-      musicToggle.setAttribute('aria-pressed', 'false');
+
+  function tampilkanUcapan() {
+    halaman1.style.display = 'none';
+    halaman2.style.display = 'flex';
+    halaman2.setAttribute('aria-hidden', 'false');
+    document.body.style.background = "url('niaBG.jpg') no-repeat center center fixed";
+    document.body.style.backgroundSize = "cover";
+    fadePlay(bgMusic).then(() => setMusicUI(true)).catch(()=>setMusicUI(false));
+    mulaiConfetti();
+  }
+
+  tombol.addEventListener('click', async () => {
+    tombol.disabled = true;
+    try {
+      await klikSound.play();
+    } catch (e) {
+      console.warn('klikSound play failed:', e);
     }
-  }
-  function fadePlay(audio) {
-    audio.volume = 0;
-    audio.play();
-    let vol = 0;
-    const fade = setInterval(() => {
-      vol += 0.05;
-      if (vol >= 1) { audio.volume = 1; clearInterval(fade); }
-      else audio.volume = vol;
-    }, 50);
-  }
-  function fadePause(audio) {
-    let vol = audio.volume;
-    const fade = setInterval(() => {
-      vol -= 0.05;
-      if (vol <= 0) { audio.pause(); audio.volume = 1; clearInterval(fade); }
-      else audio.volume = vol;
-    }, 50);
-  }
+    loadingText.style.display = 'block';
+    setTimeout(tampilkanUcapan, 1300);
+  });
+
   function toggleMusic() {
-    if (bgMusic.paused) { fadePlay(bgMusic); setMusicUI(true); }
-    else { fadePause(bgMusic); setMusicUI(false); }
+    if (bgMusic.paused) {
+      fadePlay(bgMusic).then(()=> setMusicUI(true));
+    } else {
+      fadePause(bgMusic).then(()=> setMusicUI(false));
+    }
   }
   musicToggle.addEventListener('click', toggleMusic);
   bgMusic.addEventListener('play', () => setMusicUI(true));
   bgMusic.addEventListener('pause', () => setMusicUI(false));
+});
 </script>
 </body>
 </html>
