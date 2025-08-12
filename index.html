@@ -100,6 +100,7 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
       position: relative;
       animation: fadeInUp 1.2s ease-out;
+      text-align: center;
     }
     .amplop::before {
       content: "";
@@ -112,6 +113,12 @@
       transform: translateX(-50%) rotate(45deg);
       z-index: -1;
       border-radius: 20px;
+    }
+    /* Tambahan untuk membungkus teks panjang agar tidak keluar kotak */
+    .amplop p {
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      white-space: normal;
     }
     .amplop h2, .amplop p {
       opacity: 0;
